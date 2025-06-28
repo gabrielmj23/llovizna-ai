@@ -3,3 +3,5 @@
 *.csv
 speciesnet.keras
 *.zip
+*.h5
+*.keras
