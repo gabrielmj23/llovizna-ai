@@ -5,5 +5,4 @@ speciesnet.keras
 *.zip
 *.h5
 *.keras
-*.jpeg
-*.webp
+*.png
