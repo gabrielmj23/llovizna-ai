@@ -1,3 +1,8 @@
 .venv
 *.jpg
 *.csv
+speciesnet.keras
+*.zip
+*.h5
+*.keras
+*.png
