@@ -1,14 +1,16 @@
 import splitfolders
 import os
+import sys
 
-# Define la ruta de tu dataset original
-input_folder = "../datasets"
+# Recibe la ruta del dataset original desde la terminal
+if len(sys.argv) < 2:
+    print("Uso: python split_dataset.py <ruta_del_dataset>")
+    sys.exit(1)
 
-# Define la ruta donde se crearán las nuevas carpetas (train, val, test)
-output_folder = "../datasets"
+input_folder = sys.argv[1]
+output_folder = input_folder  # El output será igual al input
 
 # Porcentajes para la división: (train, validation, test)
-# Por ejemplo, 80% train, 10% validation, 10% test
 split_ratios = (0.8, 0.1, 0.1)
 
 # Asegúrate de que la carpeta de entrada exista
@@ -19,8 +21,8 @@ else:
     splitfolders.ratio(
         input_folder,
         output=output_folder,
-        seed=42,  # Para reproducibilidad, usa cualquier número entero
+        seed=42,
         ratio=split_ratios,
-        group_prefix=None,  # Deja esto en None para la mayoría de los casos
+        group_prefix=None,
     )
     print(f"¡División completada! Las carpetas se encuentran en '{output_folder}'.")
