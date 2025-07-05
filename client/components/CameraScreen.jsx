@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import { ExpoCamera } from "./ExpoCamera";
 import { predictImage } from "../utils/models";
 import { loadAnimalsModel, ANIMALS, animalsModel } from "../utils/animales";
 import { INSECTS, insectsModel, loadInsectsModel } from "../utils/insectos";
+import * as ImageManipulator from "expo-image-manipulator";
 
 const documentCategories = ["Planta", "Animal", "Insecto"];
 
@@ -105,10 +106,19 @@ export function CameraScreen() {
           style={styles.captureButton}
           onPress={async () => {
             console.log("Capturing image...");
-            const image = await cameraRef.current?.takePictureAsync({
-              base64: true,
-            });
-            await requestInfo(image?.base64 || null);
+            const image = await cameraRef.current?.takePictureAsync();
+            if (!image?.uri) return;
+            // Redimensionar la imagen a 224x224 y obtener base64
+            const manipulated = await ImageManipulator.manipulateAsync(
+              image.uri,
+              [{ resize: { width: 224, height: 224 } }],
+              {
+                base64: true,
+                compress: 1,
+                format: ImageManipulator.SaveFormat.JPEG,
+              }
+            );
+            await requestInfo(manipulated.base64);
           }}
         >
           <View style={styles.captureButtonInner} />
