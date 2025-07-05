@@ -3,7 +3,7 @@ import { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Text, View } from "react-native";
 
-export function ExpoCamera() {
+export function ExpoCamera({ cameraRef }) {
   const [facing, setFacing] = useState("back");
   const [permission, requestPermission] = useCameraPermissions();
 
@@ -30,7 +30,14 @@ export function ExpoCamera() {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
+      <CameraView
+        style={styles.camera}
+        facing={facing}
+        onCameraReady={() => {
+          console.log("Cámara lista");
+        }}
+        ref={cameraRef}
+      >
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Voltear cámara</Text>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { CameraView } from "expo-camera";
 import {
   StyleSheet,
   View,
@@ -6,10 +7,11 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // Para iconos
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DetectedModal } from "./DetectedModal";
-// import { Camera } from './Camera'
 import { ExpoCamera } from "./ExpoCamera";
+import { predictImage } from "../utils/models";
+import { loadAnimalsModel, ANIMALS } from "../utils/animales";
 
 const documentCategories = ["Planta", "Animal", "Insecto"];
 
@@ -18,39 +20,35 @@ export function CameraScreen() {
     documentCategories[1]
   );
   const [isOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState(null);
   const [prediction, setPrediction] = useState({
     name: "Capibara",
     scientificName: "Hydrochoerus hydrochaeris",
     image:
       "https://images.pexels.com/photos/11170943/pexels-photo-11170943.jpeg",
   });
+  const cameraRef = useRef(null);
 
-  function handleTakePicture() {
-    // Aquí puedes implementar la lógica para tomar una foto
-    console.log("Taking picture...");
-    setIsOpen(true); // Abre el modal al tomar una foto
-  }
-
-  function requestInfo() {
-    // Aquí puedes implementar la lógica para solicitar información sobre el documento
+  async function requestInfo(imageBase64) {
     try {
-      if (!image) return;
-      const res = fetch("https://api.example.com/identify", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          image: image, // Aquí deberías enviar la imagen capturada
-          category: selectedCategory,
-        }),
-      });
-      const data = res.json();
-      setPrediction(data); // Actualiza el estado con la información recibida
+      if (!imageBase64) return;
+      const predictionResult = await predictImage(
+        imageBase64,
+        null,
+        loadAnimalsModel,
+        ANIMALS
+      );
+      if (predictionResult) {
+        setPrediction({
+          ...prediction,
+          name: predictionResult.className,
+          confidence: predictionResult.confidence,
+        });
+      } else {
+        console.log("no predictionResult");
+      }
+      setIsOpen(true);
     } catch (error) {
       console.error("Error requesting information:", error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
       return;
     }
     console.log("Requesting information...");
@@ -59,11 +57,7 @@ export function CameraScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* <Camera /> */}
-      <ExpoCamera />
-      {/* <View style={styles.cameraPlaceholder}>
-                <View style={styles.overlay}>
-                </View>
-            </View> */}
+      <ExpoCamera cameraRef={cameraRef} />
 
       <View style={styles.categoriesBar}>
         {documentCategories.map((category) => (
@@ -90,7 +84,13 @@ export function CameraScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.captureButton}
-          onPress={handleTakePicture}
+          onPress={async () => {
+            console.log("Capturing image...");
+            const image = await cameraRef.current?.takePictureAsync({
+              base64: true,
+            });
+            await requestInfo(image?.base64 || null);
+          }}
         >
           <View style={styles.captureButtonInner} />
         </TouchableOpacity>
