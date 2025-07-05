@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DetectedModal } from "./DetectedModal";
 import { ExpoCamera } from "./ExpoCamera";
 import { predictImage } from "../utils/models";
@@ -99,9 +99,9 @@ export function CameraScreen() {
       </View>
 
       <View style={styles.bottomControls}>
-        <TouchableOpacity style={styles.controlButton}>
+        {/* <TouchableOpacity style={styles.controlButton}>
           <Text style={styles.controlButtonText}>Cancel</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.captureButton}
           onPress={async () => {
@@ -128,9 +128,9 @@ export function CameraScreen() {
           setShowModal={setIsOpen}
           data={prediction}
         />
-        <TouchableOpacity style={styles.controlButton}>
+        {/* <TouchableOpacity style={styles.controlButton}>
           <Icon name="refresh" size={30} color="#007AFF" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );
@@ -142,36 +142,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F0F2F5",
   },
-  cameraPlaceholder: {
-    flex: 1,
-    backgroundColor: "#000",
-    marginHorizontal: 20,
-    marginTop: 30,
-    borderRadius: 15,
-    overflow: "hidden",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.2)",
-  },
-  scanArea: {
-    width: "80%",
-    height: "80%",
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-    padding: 10,
-  },
-  sideBlock: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
   },
   overlayText: {
     color: "white",

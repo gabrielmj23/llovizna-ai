@@ -37,6 +37,7 @@ export function ExpoCamera({ cameraRef }) {
           console.log("Cámara lista");
         }}
         ref={cameraRef}
+        ratio="4:3"
       >
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: "transparent",
-    margin: 64,
+    margin: 26,
   },
   button: {
     flex: 1,
