@@ -2,10 +2,10 @@ import splitfolders
 import os
 
 # Define la ruta de tu dataset original
-input_folder = "../datasets"
+input_folder = "datasets"
 
 # Define la ruta donde se crearán las nuevas carpetas (train, val, test)
-output_folder = "../datasets"
+output_folder = "datasets"
 
 # Porcentajes para la división: (train, validation, test)
 # Por ejemplo, 80% train, 10% validation, 10% test
