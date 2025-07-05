@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { CameraView } from "expo-camera";
 import {
   StyleSheet,
   View,
@@ -11,9 +10,28 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DetectedModal } from "./DetectedModal";
 import { ExpoCamera } from "./ExpoCamera";
 import { predictImage } from "../utils/models";
-import { loadAnimalsModel, ANIMALS } from "../utils/animales";
+import { loadAnimalsModel, ANIMALS, animalsModel } from "../utils/animales";
+import { INSECTS, insectsModel, loadInsectsModel } from "../utils/insectos";
 
 const documentCategories = ["Planta", "Animal", "Insecto"];
+
+const categoryToModel = {
+  Planta: {
+    model: null,
+    loadModel: null,
+    labels: [],
+  },
+  Animal: {
+    model: animalsModel,
+    loadModel: loadAnimalsModel,
+    labels: ANIMALS,
+  },
+  Insecto: {
+    model: insectsModel,
+    loadModel: loadInsectsModel,
+    labels: INSECTS,
+  },
+};
 
 export function CameraScreen() {
   const [selectedCategory, setSelectedCategory] = useState(
@@ -31,11 +49,12 @@ export function CameraScreen() {
   async function requestInfo(imageBase64) {
     try {
       if (!imageBase64) return;
+      const modelForCategory = categoryToModel[selectedCategory];
       const predictionResult = await predictImage(
         imageBase64,
-        null,
-        loadAnimalsModel,
-        ANIMALS
+        modelForCategory.model,
+        modelForCategory.loadModel,
+        modelForCategory.labels
       );
       if (predictionResult) {
         setPrediction({
