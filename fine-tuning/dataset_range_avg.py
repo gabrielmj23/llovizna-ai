@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 
 # Analiza todas las imágenes en train, val y test
-base_dir = "datasets"
+base_dir = "../datasets"
 subdirs = ["train", "val", "test"]
 
 heights = []
