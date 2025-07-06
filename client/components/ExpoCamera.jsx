@@ -2,6 +2,7 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export function ExpoCamera({ cameraRef }) {
   const [facing, setFacing] = useState("back");
@@ -41,7 +42,7 @@ export function ExpoCamera({ cameraRef }) {
       >
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Voltear cámara</Text>
+            <Ionicons name="camera-reverse" size={40} color="white" />
           </TouchableOpacity>
         </View>
       </CameraView>

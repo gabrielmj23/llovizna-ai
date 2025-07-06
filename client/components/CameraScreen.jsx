@@ -14,6 +14,7 @@ import { predictImage } from "../utils/models";
 import { loadAnimalsModel, ANIMALS, animalsModel } from "../utils/animales";
 import { INSECTS, insectsModel, loadInsectsModel } from "../utils/insectos";
 import * as ImageManipulator from "expo-image-manipulator";
+import { species } from "../constants/data";
 
 const documentCategories = ["Planta", "Animal", "Insecto"];
 
@@ -41,13 +42,22 @@ export function CameraScreen() {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [prediction, setPrediction] = useState({
-    name: "Capibara",
-    scientificName: "Hydrochoerus hydrochaeris",
-    image:
-      "https://images.pexels.com/photos/11170943/pexels-photo-11170943.jpeg",
+    name: "",
+    scientificName: "",
+    image: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const cameraRef = useRef(null);
+
+  
+  function findSpeciesById(id) {
+  return species.find((s) => s.id === id) || {
+    id: "unknown",
+    name: "Desconocido", 
+    scientificName: "Desconocido",
+    image: "https://placehold.co/300x300?text=Desconocido",
+    };
+  }
 
   async function requestInfo(imageBase64) {
     try {
@@ -60,11 +70,14 @@ export function CameraScreen() {
         modelForCategory.labels
       );
       if (predictionResult) {
+        const especie = findSpeciesById(predictionResult.className);
         setPrediction({
-          ...prediction,
+          ...especie,
           name: predictionResult.className,
           confidence: predictionResult.confidence,
         });
+        console.log("Prediction Result:", predictionResult);
+        console.log("Species found:", especie);
       } else {
         console.log("no predictionResult");
       }
