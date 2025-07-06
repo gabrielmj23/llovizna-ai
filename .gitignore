@@ -6,3 +6,4 @@ speciesnet.keras
 *.h5
 *.keras
 *.png
+*.jpeg
