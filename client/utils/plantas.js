@@ -34,7 +34,7 @@ export const loadPlantsModel = async () => {
     console.log("Cargando modelo...");
     await tf.ready();
     // Usa tf.loadLayersModel para modelos convertidos desde Keras/TF (model.json + .bin)
-    plantsModel = await tf.loadLayersModel(
+    plantsModel = await tf.loadGraphModel(
       bundleResourceIO(modelJson, modelWeights)
     );
     console.log("Modelo cargado exitosamente.");

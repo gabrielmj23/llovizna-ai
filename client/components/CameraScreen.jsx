@@ -50,14 +50,15 @@ export function CameraScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const cameraRef = useRef(null);
 
-  
   function findSpeciesById(id) {
-  return species.find((s) => s.id === id) || {
-    id: "unknown",
-    name: "Desconocido", 
-    scientificName: "Desconocido",
-    image: "https://placehold.co/300x300?text=Desconocido",
-    };
+    return (
+      species.find((s) => s.id === id) || {
+        id: "unknown",
+        name: "Desconocido",
+        scientificName: "Desconocido",
+        image: "https://placehold.co/300x300?text=Desconocido",
+      }
+    );
   }
 
   async function requestInfo(imageBase64) {
@@ -68,7 +69,8 @@ export function CameraScreen() {
         imageBase64,
         modelForCategory.model,
         modelForCategory.loadModel,
-        modelForCategory.labels
+        modelForCategory.labels,
+        selectedCategory
       );
       if (predictionResult) {
         const especie = findSpeciesById(predictionResult.className);
@@ -130,7 +132,7 @@ export function CameraScreen() {
             // Cambiar tamaño según la categoría seleccionada
             const resizeSize =
               selectedCategory === "Planta"
-                ? { width: 460, height: 440}
+                ? { width: 460, height: 440 }
                 : { width: 224, height: 224 };
             const manipulated = await ImageManipulator.manipulateAsync(
               image.uri,

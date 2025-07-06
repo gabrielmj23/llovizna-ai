@@ -21,12 +21,14 @@ const cleanBase64 = (base64String) => {
  * @param {tf.LayersModel?} model
  * @param {() => Promise<tf.LayersModel | null>} loadModel
  * @param {string[]} classLabels
+ * @param {"Planta" | "Animal" | "Insecto"} modelType
  */
 export const predictImage = async (
   imageBase64,
   model,
   loadModel,
-  classLabels
+  classLabels,
+  modelType
 ) => {
   console.log("[predictImage] called");
   if (model === null) {
@@ -59,7 +61,7 @@ export const predictImage = async (
     console.log("[predictImage] Decoding JPEG to tensor...");
     // Decodificar la imagen a tensor
     const imageTensor = decodeJpeg(bytes)
-      .resizeBilinear([224, 224])
+      .resizeBilinear(modelType === "Planta" ? [460, 440] : [224, 224])
       .toFloat()
       .expandDims();
 
