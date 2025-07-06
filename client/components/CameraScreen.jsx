@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DetectedModal } from "./DetectedModal";
@@ -45,6 +46,7 @@ export function CameraScreen() {
     image:
       "https://images.pexels.com/photos/11170943/pexels-photo-11170943.jpeg",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const cameraRef = useRef(null);
 
   async function requestInfo(imageBase64) {
@@ -70,6 +72,8 @@ export function CameraScreen() {
     } catch (error) {
       console.error("Error requesting information:", error);
       return;
+    } finally {
+      setIsLoading(false);
     }
     console.log("Requesting information...");
   }
@@ -109,6 +113,7 @@ export function CameraScreen() {
             const image = await cameraRef.current?.takePictureAsync();
             if (!image?.uri) return;
             // Redimensionar la imagen a 224x224 y obtener base64
+            setIsLoading(true);
             const manipulated = await ImageManipulator.manipulateAsync(
               image.uri,
               [{ resize: { width: 224, height: 224 } }],
@@ -132,6 +137,16 @@ export function CameraScreen() {
           <Icon name="refresh" size={30} color="#007AFF" />
         </TouchableOpacity> */}
       </View>
+
+      {/* Overlay de carga */}
+      {isLoading && (
+        <View style={styles.loadingOverlay} pointerEvents="auto">
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={{ marginTop: 16, color: "white" }}>
+            Procesando imagen...
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -227,5 +242,13 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
     backgroundColor: "#007AFF",
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999,
+    elevation: 9999,
   },
 });
