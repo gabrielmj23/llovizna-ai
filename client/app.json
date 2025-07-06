@@ -25,7 +25,8 @@
       },
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "package": "com.anonymous.lloviznaapp"
     },
@@ -42,6 +43,11 @@
           "recordAudioAndroid": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e89fc13c-3b93-4e38-8ab7-7fa0750fabe7"
+      }
+    }
   }
 }
