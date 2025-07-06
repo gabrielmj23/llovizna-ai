@@ -1,57 +1,92 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // Para iconos
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DetectedModal } from "./DetectedModal";
-// import { Camera } from './Camera'
 import { ExpoCamera } from "./ExpoCamera";
+import { predictImage } from "../utils/models";
+import { loadAnimalsModel, ANIMALS, animalsModel } from "../utils/animales";
+import { INSECTS, insectsModel, loadInsectsModel } from "../utils/insectos";
+import * as ImageManipulator from "expo-image-manipulator";
+import { species } from "../constants/data";
 
 const documentCategories = ["Planta", "Animal", "Insecto"];
+
+const categoryToModel = {
+  Planta: {
+    model: null,
+    loadModel: null,
+    labels: [],
+  },
+  Animal: {
+    model: animalsModel,
+    loadModel: loadAnimalsModel,
+    labels: ANIMALS,
+  },
+  Insecto: {
+    model: insectsModel,
+    loadModel: loadInsectsModel,
+    labels: INSECTS,
+  },
+};
 
 export function CameraScreen() {
   const [selectedCategory, setSelectedCategory] = useState(
     documentCategories[1]
   );
   const [isOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState(null);
   const [prediction, setPrediction] = useState({
-    name: "Capibara",
-    scientificName: "Hydrochoerus hydrochaeris",
-    image:
-      "https://images.pexels.com/photos/11170943/pexels-photo-11170943.jpeg",
+    name: "",
+    scientificName: "",
+    image: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const cameraRef = useRef(null);
 
-  function handleTakePicture() {
-    // Aquí puedes implementar la lógica para tomar una foto
-    console.log("Taking picture...");
-    setIsOpen(true); // Abre el modal al tomar una foto
+  
+  function findSpeciesById(id) {
+  return species.find((s) => s.id === id) || {
+    id: "unknown",
+    name: "Desconocido", 
+    scientificName: "Desconocido",
+    image: "https://placehold.co/300x300?text=Desconocido",
+    };
   }
 
-  function requestInfo() {
-    // Aquí puedes implementar la lógica para solicitar información sobre el documento
+  async function requestInfo(imageBase64) {
     try {
-      if (!image) return;
-      const res = fetch("https://api.example.com/identify", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          image: image, // Aquí deberías enviar la imagen capturada
-          category: selectedCategory,
-        }),
-      });
-      const data = res.json();
-      setPrediction(data); // Actualiza el estado con la información recibida
+      if (!imageBase64) return;
+      const modelForCategory = categoryToModel[selectedCategory];
+      const predictionResult = await predictImage(
+        imageBase64,
+        modelForCategory.model,
+        modelForCategory.loadModel,
+        modelForCategory.labels
+      );
+      if (predictionResult) {
+        const especie = findSpeciesById(predictionResult.className);
+        setPrediction({
+          ...especie,
+          name: predictionResult.className,
+          confidence: predictionResult.confidence,
+        });
+        console.log("Prediction Result:", predictionResult);
+        console.log("Species found:", especie);
+      } else {
+        console.log("no predictionResult");
+      }
+      setIsOpen(true);
     } catch (error) {
       console.error("Error requesting information:", error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
       return;
+    } finally {
+      setIsLoading(false);
     }
     console.log("Requesting information...");
   }
@@ -59,11 +94,7 @@ export function CameraScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* <Camera /> */}
-      <ExpoCamera />
-      {/* <View style={styles.cameraPlaceholder}>
-                <View style={styles.overlay}>
-                </View>
-            </View> */}
+      <ExpoCamera cameraRef={cameraRef} />
 
       <View style={styles.categoriesBar}>
         {documentCategories.map((category) => (
@@ -85,12 +116,28 @@ export function CameraScreen() {
       </View>
 
       <View style={styles.bottomControls}>
-        <TouchableOpacity style={styles.controlButton}>
+        {/* <TouchableOpacity style={styles.controlButton}>
           <Text style={styles.controlButtonText}>Cancel</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.captureButton}
-          onPress={handleTakePicture}
+          onPress={async () => {
+            console.log("Capturing image...");
+            const image = await cameraRef.current?.takePictureAsync();
+            if (!image?.uri) return;
+            // Redimensionar la imagen a 224x224 y obtener base64
+            setIsLoading(true);
+            const manipulated = await ImageManipulator.manipulateAsync(
+              image.uri,
+              [{ resize: { width: 224, height: 224 } }],
+              {
+                base64: true,
+                compress: 1,
+                format: ImageManipulator.SaveFormat.JPEG,
+              }
+            );
+            await requestInfo(manipulated.base64);
+          }}
         >
           <View style={styles.captureButtonInner} />
         </TouchableOpacity>
@@ -99,10 +146,20 @@ export function CameraScreen() {
           setShowModal={setIsOpen}
           data={prediction}
         />
-        <TouchableOpacity style={styles.controlButton}>
+        {/* <TouchableOpacity style={styles.controlButton}>
           <Icon name="refresh" size={30} color="#007AFF" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
+
+      {/* Overlay de carga */}
+      {isLoading && (
+        <View style={styles.loadingOverlay} pointerEvents="auto">
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={{ marginTop: 16, color: "white" }}>
+            Procesando imagen...
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -113,36 +170,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F0F2F5",
   },
-  cameraPlaceholder: {
-    flex: 1,
-    backgroundColor: "#000",
-    marginHorizontal: 20,
-    marginTop: 30,
-    borderRadius: 15,
-    overflow: "hidden",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.2)",
-  },
-  scanArea: {
-    width: "80%",
-    height: "80%",
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-    padding: 10,
-  },
-  sideBlock: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
   },
   overlayText: {
     color: "white",
@@ -223,5 +255,13 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
     backgroundColor: "#007AFF",
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999,
+    elevation: 9999,
   },
 });

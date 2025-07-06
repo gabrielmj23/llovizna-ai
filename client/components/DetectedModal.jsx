@@ -17,11 +17,11 @@ export function DetectedModal({showModal, setShowModal, data}) {
   function closeModal() {
     setShowModal(false);
   }
-
+  console.log("DetectedModal data:", data);
   return (
     <Modal
       transparent={showModal}
-      animationType="slide"
+      animationType="fade"
       visible={showModal} 
     >
       <View style={styles.modalContainer}>
