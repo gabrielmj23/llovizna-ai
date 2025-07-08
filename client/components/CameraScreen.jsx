@@ -13,6 +13,7 @@ import { ExpoCamera } from "./ExpoCamera";
 import { predictImage } from "../utils/models";
 import { loadAnimalsModel, ANIMALS, animalsModel } from "../utils/animales";
 import { INSECTS, insectsModel, loadInsectsModel } from "../utils/insectos";
+import { loadPlantsModel, PLANTS, plantsModel } from "../utils/plantas";
 import * as ImageManipulator from "expo-image-manipulator";
 import { species } from "../constants/data";
 
@@ -20,9 +21,9 @@ const documentCategories = ["Planta", "Animal", "Insecto"];
 
 const categoryToModel = {
   Planta: {
-    model: null,
-    loadModel: null,
-    labels: [],
+    model: plantsModel,
+    loadModel: loadPlantsModel,
+    labels: PLANTS,
   },
   Animal: {
     model: animalsModel,
@@ -49,14 +50,15 @@ export function CameraScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const cameraRef = useRef(null);
 
-  
   function findSpeciesById(id) {
-  return species.find((s) => s.id === id) || {
-    id: "unknown",
-    name: "Desconocido", 
-    scientificName: "Desconocido",
-    image: "https://placehold.co/300x300?text=Desconocido",
-    };
+    return (
+      species.find((s) => s.id === id) || {
+        id: "unknown",
+        name: "Desconocido",
+        scientificName: "Desconocido",
+        image: "https://placehold.co/300x300?text=Desconocido",
+      }
+    );
   }
 
   async function requestInfo(imageBase64) {
@@ -67,7 +69,8 @@ export function CameraScreen() {
         imageBase64,
         modelForCategory.model,
         modelForCategory.loadModel,
-        modelForCategory.labels
+        modelForCategory.labels,
+        selectedCategory
       );
       if (predictionResult) {
         const especie = findSpeciesById(predictionResult.className);
@@ -125,11 +128,15 @@ export function CameraScreen() {
             console.log("Capturing image...");
             const image = await cameraRef.current?.takePictureAsync();
             if (!image?.uri) return;
-            // Redimensionar la imagen a 224x224 y obtener base64
             setIsLoading(true);
+            // Cambiar tamaño según la categoría seleccionada
+            const resizeSize =
+              selectedCategory === "Planta"
+                ? { width: 460, height: 440 }
+                : { width: 224, height: 224 };
             const manipulated = await ImageManipulator.manipulateAsync(
               image.uri,
-              [{ resize: { width: 224, height: 224 } }],
+              [{ resize: resizeSize }],
               {
                 base64: true,
                 compress: 1,

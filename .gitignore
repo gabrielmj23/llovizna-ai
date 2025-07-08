@@ -6,4 +6,8 @@ speciesnet.keras
 *.h5
 *.keras
 *.png
+fine-tuning/mobilenet_v3_fine_tuned_model.keras
+fine-tuning/mobilenet_v3_fine_tuned_model.h5
 *.jpeg
+!adaptive-icon.png
+!splash-icon.png
