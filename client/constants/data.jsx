@@ -9,138 +9,143 @@ export const species = [
         "id": "baba",
         "name": "Baba",
         "scientificName": "Caiman crocodilus",
-        "image": "https://live.staticflickr.com/65535/52788399634_4d8b3f9c8b_b.jpg"
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/71773676/original.jpg"
     },
     {
         "id": "mono-capuchino",
         "name": "Mono capuchino",
-        "scientificName": "Cebus spp.",
-        "image": "https://images.pexels.com/photos/38280/monkey-mandril-ape-zoo-38280.jpeg"
+        "scientificName": "Cebinae",
+        "image": "https://cdn.nubika.es/wp-content/uploads/2022/07/mono-capuchino-caracteristicas-primate.jpg"
     },
     {
         "id": "pereza",
         "name": "Pereza",
         "scientificName": "Choloepus didactylus",
-        "image": "https://images.unsplash.com/photo-1591727884968-cc11135a19b3"
+        "image": "https://elinformadorve.com/wp-content/uploads/2021/10/depositphotos_52410571-stock-photo-sloth-in-puerto-viejo-costa.jpg"
     },
     {
         "id": "ranita-minera",
         "name": "Ranita minera",
         "scientificName": "Dendrobates leucomelas",
-        "image": "https://live.staticflickr.com/65535/48937263217_5d7d9c6f9e_b.jpg"
+        "image": "https://exclusivapets.wordpress.com/wp-content/uploads/2013/09/ranas-puertoayauco1.jpg"
     },
     {
         "id": "tapir",
         "name": "Tapir",
         "scientificName": "Tapirus terrestris",
-        "image": "https://images.unsplash.com/photo-1583511655826-05700442b31b"
+        "image": "https://media.istockphoto.com/id/171575572/es/foto/tapir.jpg?s=612x612&w=0&k=20&c=mhxrAZZ-x4NWibv-QRsYlYQ9sBOeJ2gSaYalO7Px_0s="
     },
     {
         "id": "capibara",
         "name": "Capibara",
         "scientificName": "Hydrochoerus hydrochaeris",
-        "image": "https://images.pexels.com/photos/66623/pexels-photo-66623.jpeg"
+        "image": "https://pbs.twimg.com/media/FQ_CRYoX0AAWG5R.jpg"
     },
     {
         "id": "picure",
         "name": "Picure",
         "scientificName": "Dasyprocta leporina",
-        "image": "https://live.staticflickr.com/65535/49079908911_1c8a1d1f9c_b.jpg"
+        "image": "https://i.pinimg.com/564x/67/b2/90/67b2904da5fc62199a4ba3fbf03cffc8.jpg"
     },
     {
         "id": "iguana",
         "name": "Iguana",
-        "scientificName": "Iguana iguana",
-        "image": "https://images.unsplash.com/photo-1578926375605-eab8333cdf55"
+        "scientificName": "Iguana",
+        "image": "https://www.anywhere.com/img-a/flora-fauna/reptile/iguana-verde/green-iguana2.jpg?q=95&w=650"
     },
     {
         "id": "piranha",
         "name": "Piraña",
         "scientificName": "Pygocentrus nattereri",
-        "image": "https://live.staticflickr.com/65535/49105488556_9f7a6f8f8c_b.jpg"
+        "image": "https://bondlsc.missouri.edu/wp-content/uploads/2019/09/strong-jaws-and-sharp-teeth-piranha-research-suggests-evolutionary-adaptations.jpg"
     },
     {
         "id": "arana-mona",
         "name": "Araña mona",
-        "scientificName": "Phoneutria spp.",
-        "image": "https://images.pexels.com/photos/674318/pexels-photo-674318.jpeg"
+        "scientificName": "Theraphosa blondi",
+        "image": "https://delamazonas.com/wp-content/uploads/2020/08/640px-Theraphosa_blondi_1-LOW.jpg"
     },
     {
         "id": "bachaco",
         "name": "Bachaco",
-        "scientificName": "Atta spp.",
-        "image": "https://live.staticflickr.com/65535/50363258897_4f2d1d1f6c_b.jpg"
+        "scientificName": "Odontomachus bauri",
+        "image": "https://alchetron.com/cdn/odontomachus-bauri-34719126-2270-4dbf-b955-c4cf1e62029-resize-750.jpeg"
     },
     {
         "id": "bachaco-culon",
         "name": "Bachaco culón",
-        "scientificName": "Paraponera clavata",
-        "image": "https://live.staticflickr.com/65535/49307652057_5e1f8a8c0c_b.jpg"
+        "scientificName": "Atta laevigata",
+        "image": "https://www.caracaschronicles.com/wp-content/uploads/2014/10/bachaco.jpg"
     },
     {
         "id": "libelula",
         "name": "Libélula",
         "scientificName": "Odonata",
-        "image": "https://images.unsplash.com/photo-1566438480900-0609be27a4be"
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/476969/large.jpg"
     },
     {
         "id": "mariposa",
         "name": "Mariposa",
         "scientificName": "Lepidoptera",
-        "image": "https://images.pexels.com/photos/87403/butterfly-insect-butterflies-macro-87403.jpeg"
+        "image": "https://haimaneltroudi.com/wp-content/uploads/2024/01/Haiman-el-troudi-la-mariposa-azul-un-hermoso-simbolo-de-la-venezolanidad-04-585x390.jpg"
     },
     {
         "id": "saltamontes",
         "name": "Saltamontes",
         "scientificName": "Caelifera",
-        "image": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d"
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/89265523/original.jpeg"
     },
     {
         "id": "apamate",
         "name": "Apamate",
         "scientificName": "Tabebuia rosea",
-        "image": "https://live.staticflickr.com/65535/48937263217_5d7d9c6f9e_b.jpg"
+        "image": "https://m.media-amazon.com/images/I/81vIk1UcH1L.jpg"
     },
     {
         "id": "araguaney",
         "name": "Araguaney",
         "scientificName": "Handroanthus chrysanthus",
-        "image": "https://images.unsplash.com/photo-1588411393115-f87b9e5b1db2"
+        "image": "https://m.media-amazon.com/images/I/61ZcWBnInmL._UF894,1000_QL80_.jpg"
     },
     {
         "id": "arbolada-mango",
         "name": "Árbol de mango",
         "scientificName": "Mangifera indica",
-        "image": "https://images.pexels.com/photos/60011/mango-tree-tropical-green-60011.jpeg"
+        "image": "https://elcampesino.co/wp-content/uploads/2016/03/4-13.jpg"
     },
     {
         "id": "ceiba",
         "name": "Ceiba",
         "scientificName": "Ceiba pentandra",
-        "image": "https://live.staticflickr.com/65535/48937263217_5d7d9c6f9e_b.jpg"
+        "image": "https://delamazonas.com/wp-content/uploads/2019/12/Ceiba_pentandra_34zz.jpg"
     },
     {
         "id": "orquidea",
         "name": "Orquídea",
         "scientificName": "Orchidaceae",
-        "image": "https://images.unsplash.com/photo-1566438480900-0609be27a4be"
+        "image": "https://i.pinimg.com/originals/a0/5a/1f/a05a1f3e9d4e93afbd4656686b1dde3e.jpg"
     },
     {
         "id": "roble",
         "name": "Roble",
-        "scientificName": "Tabebuia rosea",
-        "image": "https://images.pexels.com/photos/1179229/pexels-photo-1179229.jpeg"
+        "scientificName": "Platymiscium diadelphum",
+        "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcbiDLGznwOz12HbWexSB3uWOORTte9sT32nDxiC3kF6XQHA_ox_tUpchLyjjNpXjUwEFALf296bzAr4X-PEKfYMGC-9Zi45It4bHvCq9AlJ0O92jri1g1zqf64loMnFMlPprUIR64jZOK/s1047/photo_2020-06-02_17-04-09.jpg"
     },
     {
         "id": "caoba",
         "name": "Caoba",
         "scientificName": "Swietenia macrophylla",
-        "image": "https://live.staticflickr.com/65535/48937263217_5d7d9c6f9e_b.jpg"
+        "image": "https://i.pinimg.com/474x/d6/4f/b3/d64fb3218e292c57dd51e78dafb604e5.jpg"
     },
     {
         "id": "saman",
         "name": "Samán",
         "scientificName": "Samanea saman",
-        "image": "https://images.unsplash.com/photo-1588411393115-f87b9e5b1db2"
+        "image": "https://haimaneltroudi.com/wp-content/uploads/2021/08/Haiman-el-troudi-el-frondoso-saman-arbol-de-la-lluvia-01.jpg"
+    },{
+        "id": "gato",
+        "name": "Gato",
+        "scientificName": "Felis catus",
+        "image": "https://images.unsplash.com/photo-1650948630578-b3bd25773b0e?q=80&w=876&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     }
 ];
