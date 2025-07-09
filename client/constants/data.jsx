@@ -147,5 +147,35 @@ export const species = [
         "name": "Gato",
         "scientificName": "Felis catus",
         "image": "https://images.unsplash.com/photo-1650948630578-b3bd25773b0e?q=80&w=876&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "id": "caricari",
+        "name": "Caricari",
+        "scientificName": "Caracara plancus",
+        "image": "",
+    },
+    {
+        "id": "turpial-lagunero",
+        "name": "Turpial lagunero",
+        "scientificName": "Gymnomystax mexicanus",
+        "image": "",
+    },
+    {
+        "id": "ave-paraiso",
+        "name": "Ave del paraíso",
+        "scientificName": "Strelitzia reginae",
+        "image": "",
+    },
+    {
+        "id": "corona-cristo",
+        "name": "Corona de Cristo",
+        "scientificName": "Euphorbia milii",
+        "image": "",
+    },
+    {
+        "id": "indio-desnudo",
+        "name": "Indio desnudo",
+        "scientificName": "Bursera simaruba",
+        "image": "",
     }
 ];
