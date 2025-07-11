@@ -14,14 +14,21 @@ const modelWeights = [
 export let plantsModel = null;
 // Lista de plantas según tu dataset, en el mismo orden que las clases del modelo
 export const PLANTS = [
-  "apamate",
   "araguaney",
   "arbolada-mango",
+  "ave-paraiso",
+  "canafistola",
   "caoba",
+  "cayena",
+  "cedro",
   "ceiba",
-  "orquidea",
-  "roble",
-  "saman",
+  "chaguaramo",
+  "coralito",
+  "corona-cristo",
+  "indio-desnudo",
+  "jacaranda",
+  "palma-africana",
+  "ucaro",
 ];
 
 // Función para cargar el modelo

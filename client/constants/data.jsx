@@ -177,5 +177,71 @@ export const species = [
         "name": "Indio desnudo",
         "scientificName": "Bursera simaruba",
         "image": "",
+    },
+    {
+        "id": "cachamoto",
+        "name": "Cachamoto",
+        "scientificName": "Colossoma × Piaractus",
+        "image": "",
+    },
+    {
+        "id": "potoca",
+        "name": "Potoca",
+        "scientificName": "Columbina picui",
+        "image": "",
+    },
+    {
+        "id": "terecaya",
+        "name": "Terecaya",
+        "scientificName": "Podocnemis unifilis",
+        "image": "",
+    },
+    {
+        "id": "canafistola",
+        "name": "Cañafistola",
+        "scientificName": "Cassia grandis",
+        "image": "",
+    },
+    {
+        "id": "cayena",
+        "name": "Cayena",
+        "scientificName": "Hibiscus rosa-sinensis",
+        "image": "",
+    },
+    {
+        "id": "cedro",
+        "name": "Cedro",
+        "scientificName": "Cedrela odorata",
+        "image": "",
+    },
+    {
+        "id": "chaguaramo",
+        "name": "Chaguaramo",
+        "scientificName": "Roystonea oleracea",
+        "image": "",
+    },
+    {
+        "id": "coralito",
+        "name": "Coralito",
+        "scientificName": "Ixora coccinea",
+        "image": "",
+    },
+    {
+        "id": "jacaranda",
+        "name": "Jacaranda",
+        "scientificName": "Jacaranda mimosifolia",
+        "image": "",
+    },
+    {
+        "id": "palma-africana",
+        "name": "Palma africana",
+        "scientificName": "Elaeis guineensis",
+        "image": "",
+    },
+    {
+        "id": "ucaro",
+        "name": "Ucaro",
+        "scientificName": "Bucidad espinoza",
+        "image": "",
     }
 ];

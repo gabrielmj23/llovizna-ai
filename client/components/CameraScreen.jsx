@@ -61,7 +61,7 @@ export function CameraScreen() {
     );
   }
 
-  async function requestInfo(imageBase64) {
+  async function requestInfo(imageBase64, imageUri) {
     try {
       if (!imageBase64) return;
       const modelForCategory = categoryToModel[selectedCategory];
@@ -78,6 +78,7 @@ export function CameraScreen() {
           ...especie,
           name: predictionResult.className,
           confidence: predictionResult.confidence,
+          image: imageUri, // Usar la imagen capturada
         });
         console.log("Prediction Result:", predictionResult);
         console.log("Species found:", especie);
@@ -130,10 +131,7 @@ export function CameraScreen() {
             if (!image?.uri) return;
             setIsLoading(true);
             // Cambiar tamaño según la categoría seleccionada
-            const resizeSize =
-              selectedCategory === "Planta"
-                ? { width: 460, height: 440 }
-                : { width: 224, height: 224 };
+            const resizeSize = { width: 224, height: 224 };
             const manipulated = await ImageManipulator.manipulateAsync(
               image.uri,
               [{ resize: resizeSize }],
@@ -143,7 +141,7 @@ export function CameraScreen() {
                 format: ImageManipulator.SaveFormat.JPEG,
               }
             );
-            await requestInfo(manipulated.base64);
+            await requestInfo(manipulated.base64, image.uri);
           }}
         >
           <View style={styles.captureButtonInner} />
@@ -152,10 +150,8 @@ export function CameraScreen() {
           showModal={isOpen}
           setShowModal={setIsOpen}
           data={prediction}
+          setData={setPrediction}
         />
-        {/* <TouchableOpacity style={styles.controlButton}>
-          <Icon name="refresh" size={30} color="#007AFF" />
-        </TouchableOpacity> */}
       </View>
 
       {/* Overlay de carga */}

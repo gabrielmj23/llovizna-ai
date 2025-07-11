@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   message: {
     textAlign: "center",
     paddingBottom: 10,
+    marginTop: 40,
   },
   camera: {
     flex: 1,

@@ -61,19 +61,15 @@ export const predictImage = async (
     console.log("[predictImage] Decoding JPEG to tensor...");
     // Decodificar la imagen a tensor
     const imageTensor = decodeJpeg(bytes)
-      .resizeBilinear(modelType === "Planta" ? [460, 440] : [224, 224])
+      .resizeBilinear([224, 224])
       .toFloat()
       .expandDims();
 
     console.log("[predictImage] Normalizing tensor...");
-    // Normalización de MobileNetV2 de [0, 255] a [-1, 1]
-    const normalizedTensor = imageTensor
-      .div(tf.scalar(127.5))
-      .sub(tf.scalar(1));
-
     console.log("[predictImage] Running prediction...");
+
     // Realizar la Predicción
-    const predictions = model.predict(normalizedTensor);
+    const predictions = model.predict(imageTensor);
     const predictionData = predictions.dataSync();
 
     console.log("[predictImage] Processing prediction results...");
@@ -86,7 +82,6 @@ export const predictImage = async (
 
     // Liberar la memoria del tensor
     imageTensor.dispose();
-    normalizedTensor.dispose();
     predictions.dispose();
 
     console.log(
@@ -97,12 +92,7 @@ export const predictImage = async (
     return {
       className: predictedClassName,
       confidence: confidence.toFixed(2),
-      allPredictions: predictionData
-        .map((prob, i) => ({
-          label: classLabels[i],
-          probability: (prob * 100).toFixed(2),
-        }))
-        .sort((a, b) => b.probability - a.probability),
+      allPredictions: predictionData,
     };
   } catch (error) {
     console.error("[predictImage] Error durante la predicción:", error);

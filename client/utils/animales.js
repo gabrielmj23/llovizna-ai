@@ -13,16 +13,15 @@ const modelWeights = [
 
 export let animalsModel = null;
 export const ANIMALS = [
-  "anaconda",
-  "baba",
+  "cachamoto",
   "capibara",
+  "caricari",
   "iguana",
   "mono-capuchino",
-  "pereza",
-  "picure",
-  "piranha",
+  "potoca",
   "ranita-minera",
-  "tapir",
+  "terecaya",
+  "turpial-lagunero",
 ];
 
 // Función para cargar el modelo
