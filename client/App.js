@@ -2,19 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { CameraScreen } from "./components/CameraScreen";
-import { useEffect } from "react";
-import { loadAnimalsModel } from "./utils/animales";
-import { loadInsectsModel } from "./utils/insectos";
-import { loadPlantsModel } from "./utils/plantas";
 
 export default function App() {
-  useEffect(function loadAllModels() {
-    // Cargar modelos de animales e insectos
-    loadAnimalsModel();
-    loadInsectsModel();
-    loadPlantsModel();
-  }, []);
-
   return (
     <SafeAreaProvider>
       <View style={styles.container}>

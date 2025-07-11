@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -48,6 +48,7 @@ export function CameraScreen() {
     image: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [modelsLoading, setModelsLoading] = useState(true);
   const cameraRef = useRef(null);
 
   function findSpeciesById(id) {
@@ -95,8 +96,33 @@ export function CameraScreen() {
     console.log("Requesting information...");
   }
 
+  useEffect(() => {
+    async function loadAllModels() {
+      setModelsLoading(true);
+      try {
+        await Promise.all([
+          loadAnimalsModel(),
+          loadInsectsModel(),
+          loadPlantsModel(),
+        ]);
+      } catch (e) {
+        console.error("Error cargando modelos:", e);
+      }
+      setModelsLoading(false);
+    }
+    loadAllModels();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
+      {modelsLoading && (
+        <View style={styles.modelsLoadingOverlay} pointerEvents="auto">
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={{ marginTop: 16, color: "white", fontSize: 18 }}>
+            Cargando modelos...
+          </Text>
+        </View>
+      )}
       {/* <Camera /> */}
       <ExpoCamera cameraRef={cameraRef} />
 
@@ -262,6 +288,14 @@ const styles = StyleSheet.create({
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999,
+    elevation: 9999,
+  },
+  modelsLoadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.8)",
     justifyContent: "center",
     alignItems: "center",
     zIndex: 9999,
